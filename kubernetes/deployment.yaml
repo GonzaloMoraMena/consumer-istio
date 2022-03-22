@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer
+  labels:
+    app: consumer
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: consumer
+      labels:
+        app: consumer
+    spec:
+      containers:
+        - name: consumer-v1
+          image: consumer:v1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PRICE
+              value: provider:8080
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: consumer
